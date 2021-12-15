@@ -6,7 +6,7 @@
     android:columnCount="4">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_cancel"
+        android:id="@+id/button_clear"
         android:text="@string/text_cancel"
         style="@style/KeyboardStyle"
         android:background="@color/button_c_dell_backgrount_color"/>
