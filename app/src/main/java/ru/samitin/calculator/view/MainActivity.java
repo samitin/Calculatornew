@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View {
         for (int numberId : numberIds) findViewById(numberId).setOnClickListener(numbersListener);
 
         int[]meaningIds={R.id.button_clear,R.id.button_dellite,R.id.button_plus_minus,R.id.button_procent,
-                R.id.button_plus,R.id.button_minus,R.id.button_multiply,R.id.button_division,R.id.button_point};
+                R.id.button_plus,R.id.button_minus,R.id.button_multiply,R.id.button_division,R.id.button_point,R.id.button_equals};
         for (int id:meaningIds)
             findViewById(id).setOnClickListener(meaningsListener);
 
@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements View {
                    break;
                case R.id.button_point:
                    presenter.clickMeaning(ButtonsKeybosrd.POINT);
+                   break;
+               case R.id.button_equals:
+                   presenter.clickMeaning(ButtonsKeybosrd.EQUALS);
                    break;
            }
         }
