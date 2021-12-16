@@ -1,6 +1,8 @@
 package ru.samitin.calculator.model;
 
-public interface Repository {
+import android.os.Parcelable;
+
+public interface Repository extends Parcelable {
     Double getNumber();
     void setNumber(Double num);
     Double procent(Double num);

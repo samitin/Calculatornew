@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,7 @@ import ru.samitin.calculator.presenter.Presenter;
 import ru.samitin.calculator.presenter.PresenterImpl;
 
 public class MainActivity extends AppCompatActivity implements View {
+    public static final String EDIT_TEXT_KEY="EDIT_TEXT_KEY";
     private Presenter presenter;
     int[]numberIds;
     @Override
@@ -82,6 +84,21 @@ public class MainActivity extends AppCompatActivity implements View {
            }
         }
     };
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveState(outState);
+        EditText etText=findViewById(R.id.editTextNumber);
+        outState.putString(EDIT_TEXT_KEY,etText.getText().toString());
+    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        presenter.getState(savedInstanceState);
+        showText(savedInstanceState.getString(EDIT_TEXT_KEY));
+    }
+
 
     @Override
     public void showText(String text) {

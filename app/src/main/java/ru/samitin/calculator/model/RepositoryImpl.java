@@ -1,7 +1,50 @@
 package ru.samitin.calculator.model;
 
-public class RepositoryImpl implements Repository {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class RepositoryImpl implements Repository,Parcelable {
     private Double number=Double.NaN;
+
+    public RepositoryImpl(Parcel in) {
+        if (in.readByte() == 0) {
+            number = null;
+        } else {
+            number = in.readDouble();
+        }
+    }
+
+    public RepositoryImpl() {
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (number == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(number);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<RepositoryImpl> CREATOR = new Creator<RepositoryImpl>() {
+        @Override
+        public RepositoryImpl createFromParcel(Parcel in) {
+            return new RepositoryImpl(in);
+        }
+
+        @Override
+        public RepositoryImpl[] newArray(int size) {
+            return new RepositoryImpl[size];
+        }
+    };
+
     @Override
     public Double getNumber() {
         return number;

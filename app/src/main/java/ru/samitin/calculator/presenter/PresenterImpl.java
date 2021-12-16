@@ -1,9 +1,14 @@
 package ru.samitin.calculator.presenter;
 
+import android.os.Bundle;
+
 import ru.samitin.calculator.model.Repository;
 import ru.samitin.calculator.view.View;
 
 public class PresenterImpl implements Presenter{
+    private static final String REPOSITORY_KEY="REPOSITORY_KEY";
+    private static final String NUMBER_TEXT_KEY="NUMBER_TEXT";
+    private static final String STATE_MATH_KEY="STATE_MATH_KEY";
     private View view;
     private Repository repository;
     private String numberText="";
@@ -42,6 +47,21 @@ public class PresenterImpl implements Presenter{
                 break;
         }
     }
+
+    @Override
+    public void saveState(Bundle bundle) {
+        bundle.putParcelable(REPOSITORY_KEY,repository);
+        bundle.putString(NUMBER_TEXT_KEY, numberText);
+        bundle.putString(STATE_MATH_KEY,stateMath);
+    }
+
+    @Override
+    public void getState(Bundle bundle) {
+        repository=bundle.getParcelable(REPOSITORY_KEY);
+        numberText=bundle.getString(NUMBER_TEXT_KEY);
+        stateMath=bundle.getString(STATE_MATH_KEY);
+    }
+
     private void inputNumber(String meaning){
         switch (meaning) {
             case ButtonsKeybosrd.CLEAR:
@@ -121,6 +141,8 @@ public class PresenterImpl implements Presenter{
                 numberText=repository.division(Double.parseDouble(numberText)).toString();
                 break;
         }
+        while (numberText.charAt(numberText.length()-1)=='0'||numberText.charAt(numberText.length()-1)=='.')
+            numberText=numberText.replace(numberText.substring(numberText.length()-1),"");
         view.showText(numberText);
         stateMath=ButtonsKeybosrd.NOT;
     }
